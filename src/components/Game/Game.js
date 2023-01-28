@@ -1,8 +1,10 @@
 import React from 'react';
 
-import { sample } from '../../utils';
+import { sample, range } from '../../utils';
 import { WORDS } from '../../data';
 import GuessInput from '../GuessInput'
+import GuessResults from '../GuessResults'
+import Banner from '../Banner'
 
 // Pick a random word on every pageload.
 const answer = sample(WORDS);
@@ -10,15 +12,17 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  const [guesses, addGuess] = React.useState([{ id: Math.random(), guess: '' }])
+  const initialGuesses = range(0,5).map(() => ({ id: Math.random(), guess: null}))
+
+  const [guesses, addGuess] = React.useState(initialGuesses)
+
+  const [banner, setBanner] = React.useState({hasWon: false, show: false, guessesCount: 0})
+
   return (
     <>
-      <div className="guess-results">
-        {guesses.map(({ id, guess }) =>
-          <p key={id} className="guess">{guess}</p>
-        )}
-      </div>
-      <GuessInput guesses={guesses} addGuess={addGuess} />
+      {banner.show ? <Banner banner={banner} answer={answer} /> : null}
+      <GuessResults guesses={guesses} answer={answer}/>
+      <GuessInput guesses={guesses} addGuess={addGuess} setBanner={setBanner} banner={banner} answer={answer} />
     </>
   )
 }

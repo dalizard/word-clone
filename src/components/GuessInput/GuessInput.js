@@ -1,12 +1,28 @@
 import React from "react";
 
-function GuessInput({ guesses, addGuess }) {
+function GuessInput({ guesses, addGuess, setBanner, banner, answer }) {
   const [value, setValue] = React.useState('')
 
   const submitForm = (event) => {
     event.preventDefault()
-    addGuess([...guesses].concat([{ id: Math.random(), guess: value}]))
-    setValue(value)
+    setValue('')
+    const idx = guesses.findIndex(guess => guess.guess === null)
+
+    if (idx === -1) return
+
+    const newGuesses = [...guesses]
+    newGuesses[idx] = { id: Math.random(), guess: value }
+
+    if (value === answer) {
+      const guessesCount = newGuesses.filter(guess => guess.guess !== null).length
+      setBanner({show: true, hasWon: true, guessesCount })
+    }
+
+    addGuess(newGuesses)
+
+    if (!newGuesses.find(guess => guess.guess === null)) {
+      setBanner({...banner, show: true})
+    }
   }
 
   return (
