@@ -4,9 +4,9 @@ import Guess from '../Guess'
 function GuessResults({ guesses, answer }) {
   return (
     <div className="guess-results">
-      {guesses.map(({ id, guess }) =>
+      {guesses.map(({ id, value }) =>
         <p key={id} className="guess">
-          <Guess guess={guess || '     '} answer={answer} blank={guess} />
+          <Guess value={value} answer={answer} />
         </p>
       )}
     </div>

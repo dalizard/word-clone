@@ -1,31 +1,30 @@
 import React from "react";
 
-function GuessInput({ guesses, addGuess, setBanner, banner, answer }) {
+function GuessInput({ guesses, setGuesses, setBanner, banner, answer }) {
   const [value, setValue] = React.useState('')
   const [disabled, setDisabled] = React.useState(false)
 
   const submitForm = (event) => {
     event.preventDefault()
     setValue('')
-    const idx = guesses.findIndex(guess => guess.guess === null)
 
-    if (idx === -1) return
+    const idx = guesses.findIndex(guess => guess.value === null)
 
     const newGuesses = [...guesses]
-    newGuesses[idx] = { id: Math.random(), guess: value }
+    newGuesses[idx] = { id: Math.random(), value: value}
 
     if (value === answer) {
-      const guessesCount = newGuesses.filter(guess => guess.guess !== null).length
+      const guessesCount = newGuesses.filter(guess => guess.value !== null).length
       setDisabled(true)
       setBanner({show: true, hasWon: true, guessesCount })
     }
 
-    addGuess(newGuesses)
-
-    if (!newGuesses.find(guess => guess.guess === null)) {
+    if (!newGuesses.find(guess => guess.value === null)) {
       setDisabled(true)
       setBanner({...banner, show: true})
     }
+
+    setGuesses(newGuesses)
   }
 
   return (

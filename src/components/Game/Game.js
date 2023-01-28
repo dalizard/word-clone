@@ -12,17 +12,17 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
-  const initialGuesses = range(0,5).map(() => ({ id: Math.random(), guess: null}))
-
-  const [guesses, addGuess] = React.useState(initialGuesses)
+  const [guesses, setGuesses] = React.useState(
+    range(0,5).map(() => ({ id: Math.random(), value: null}))
+  )
 
   const [banner, setBanner] = React.useState({hasWon: false, show: false, guessesCount: 0})
 
   return (
     <>
-      {banner.show ? <Banner banner={banner} answer={answer} /> : null}
-      <GuessResults guesses={guesses} answer={answer}/>
-      <GuessInput guesses={guesses} addGuess={addGuess} setBanner={setBanner} banner={banner} answer={answer} />
+      {banner.show && <Banner banner={banner} answer={answer} />}
+      <GuessResults guesses={guesses} answer={answer} />
+      <GuessInput guesses={guesses} setGuesses={setGuesses} setBanner={setBanner} banner={banner} answer={answer} />
     </>
   )
 }
