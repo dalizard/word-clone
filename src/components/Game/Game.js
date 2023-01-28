@@ -23,7 +23,7 @@ function Game() {
     <>
       {banner.show && <Banner banner={banner} answer={answer} />}
       <GuessResults guesses={guesses} answer={answer} />
-      <GuessInput guesses={guesses} setGuesses={setGuesses} setBanner={setBanner} banner={banner} answer={answer} />
+      <GuessInput guesses={guesses} setGuesses={setGuesses} setBanner={setBanner} answer={answer} />
     </>
   )
 }

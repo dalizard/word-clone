@@ -1,7 +1,7 @@
 import React from "react";
 import { NUM_OF_GUESSES_ALLOWED } from '../../constants'
 
-function GuessInput({ guesses, setGuesses, setBanner, banner, answer }) {
+function GuessInput({ guesses, setGuesses, setBanner, answer }) {
   const [value, setValue] = React.useState('')
   const [disabled, setDisabled] = React.useState(false)
 
@@ -16,7 +16,7 @@ function GuessInput({ guesses, setGuesses, setBanner, banner, answer }) {
 
     if (guessAttempt == NUM_OF_GUESSES_ALLOWED) {
       setDisabled(true)
-      setBanner({...banner, show: true})
+      setBanner({show: true, hasWon: false, guessesCount: guessAttempt})
     }
 
     if (value === answer) {
