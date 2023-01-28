@@ -10,8 +10,16 @@ const answer = sample(WORDS);
 console.info({ answer });
 
 function Game() {
+  const [guesses, addGuess] = React.useState([{ id: Math.random(), guess: '' }])
   return (
-    <GuessInput />
+    <>
+      <div className="guess-results">
+        {guesses.map(({ id, guess }) =>
+          <p key={id} className="guess">{guess}</p>
+        )}
+      </div>
+      <GuessInput guesses={guesses} addGuess={addGuess} />
+    </>
   )
 }
 
