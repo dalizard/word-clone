@@ -6,7 +6,7 @@ function GuessInput() {
   const submitForm = (event) => {
     event.preventDefault()
     console.log(value)
-    setValue({guess: ''})
+    setValue({ guess: '' })
   }
 
   return (
