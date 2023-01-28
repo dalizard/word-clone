@@ -2,6 +2,7 @@ import React from "react";
 
 function GuessInput({ guesses, addGuess, setBanner, banner, answer }) {
   const [value, setValue] = React.useState('')
+  const [disabled, setDisabled] = React.useState(false)
 
   const submitForm = (event) => {
     event.preventDefault()
@@ -15,12 +16,14 @@ function GuessInput({ guesses, addGuess, setBanner, banner, answer }) {
 
     if (value === answer) {
       const guessesCount = newGuesses.filter(guess => guess.guess !== null).length
+      setDisabled(true)
       setBanner({show: true, hasWon: true, guessesCount })
     }
 
     addGuess(newGuesses)
 
     if (!newGuesses.find(guess => guess.guess === null)) {
+      setDisabled(true)
       setBanner({...banner, show: true})
     }
   }
@@ -34,6 +37,7 @@ function GuessInput({ guesses, addGuess, setBanner, banner, answer }) {
         minLength="5"
         maxLength="5"
         value={value}
+        disabled={disabled}
         onChange={(event) =>
           setValue(event.target.value.toUpperCase())} />
     </form>
