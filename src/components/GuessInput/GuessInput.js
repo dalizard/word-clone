@@ -1,4 +1,5 @@
 import React from "react";
+import { NUM_OF_GUESSES_ALLOWED } from '../../constants'
 
 function GuessInput({ guesses, setGuesses, setBanner, banner, answer }) {
   const [value, setValue] = React.useState('')
@@ -8,23 +9,22 @@ function GuessInput({ guesses, setGuesses, setBanner, banner, answer }) {
     event.preventDefault()
     setValue('')
 
-    const idx = guesses.findIndex(guess => guess.value === null)
+    const currentGuess = guesses.find(guess => guess.value === null)
+    const guessAttempt = guesses.indexOf(currentGuess) + 1
 
-    const newGuesses = [...guesses]
-    newGuesses[idx] = { id: Math.random(), value: value}
+    currentGuess.value = value
 
-    if (value === answer) {
-      const guessesCount = newGuesses.filter(guess => guess.value !== null).length
-      setDisabled(true)
-      setBanner({show: true, hasWon: true, guessesCount })
-    }
-
-    if (!newGuesses.find(guess => guess.value === null)) {
+    if (guessAttempt == NUM_OF_GUESSES_ALLOWED) {
       setDisabled(true)
       setBanner({...banner, show: true})
     }
 
-    setGuesses(newGuesses)
+    if (value === answer) {
+      setDisabled(true)
+      setBanner({show: true, hasWon: true, guessesCount: guessAttempt })
+    }
+
+    setGuesses([...guesses])
   }
 
   return (
