@@ -1,11 +1,11 @@
 import React from "react";
 
-function Banner({ banner, answer }) {
+function Banner({ gameStatus, numOfGuesses, answer }) {
   const happyBanner = (
     <div className="happy banner">
       <p>
         <strong>Congratulations!</strong> Got it in {' '}
-        <strong>{banner.guessesCount} guesses</strong>.
+        <strong>{numOfGuesses} guesses</strong>.
       </p>
     </div>
   )
@@ -15,7 +15,13 @@ function Banner({ banner, answer }) {
       <p>Sorry, the correct answer is <strong>{answer}</strong>.</p>
     </div>
   )
-  return banner.hasWon ? happyBanner : sadBanner
+
+  switch (gameStatus) {
+    case 'won':
+      return happyBanner
+    case 'lost':
+      return sadBanner
+  }
 }
 
 export default Banner;
