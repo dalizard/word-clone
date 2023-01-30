@@ -1,8 +1,7 @@
 import React from "react";
 
-function GuessInput({ guesses, handleGuess, gameStatus }) {
+function GuessInput({ handleGuess, gameStatus }) {
   const [value, setValue] = React.useState('')
-  const [disabled, setDisabled] = React.useState(false)
 
   const submitForm = (event) => {
     event.preventDefault()
